@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import sistema.BancoDeDados;
+import sistema.entidades.Cargo;
 
 public class CargosInserir extends JPanel {
 
@@ -35,7 +36,7 @@ public class CargosInserir extends JPanel {
 		
 		labelTitulo = new JLabel("Cadastro de Cargo", JLabel.CENTER);
 		labelTitulo.setFont (new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-		labelCargo = new JLabel("Nome do crago", JLabel.LEFT);
+		labelCargo = new JLabel("Nome do cargo", JLabel.LEFT);
 		campoCargo = new JTextField();
 		botaoGravar = new JButton("Adicionar cargo");
 		
