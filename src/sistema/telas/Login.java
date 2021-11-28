@@ -5,9 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import sistema.Navegador;
 
 public class Login extends JPanel{
 
@@ -56,8 +59,11 @@ public class Login extends JPanel{
 		botaoEntrar.addActionListener((ActionListener) new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				if(campoUsuario.getText().equals("admin") && new String(campoSenha.getPassword()).equals("admin")) {
+					Navegador.inicio();
+				}else {
+					JOptionPane.showMessageDialog(null, "Acesso não permitido");
+				}
 			}
 		});
 	}

@@ -68,10 +68,11 @@ public class CargosInserir extends JPanel {
 	private void sqlInserirCargo(Cargo novoCargo) {
 		
 		//validadndo nome
-		if(campoCargo.getText().length() <= 3) {
+		if(campoCargo.getText().length() <= 5) {
 			JOptionPane.showMessageDialog(null, "Por favor, preencha o nome corretamente");
 			return;
 		}
+		
 		//conexão
 		Connection conexao;
 		//instrução sql
@@ -85,7 +86,7 @@ public class CargosInserir extends JPanel {
 			
 			//criando a instrução SQL
 			instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			instrucaoSQL.executeUpdate("INSERT INTO cargos (nome) VALUES('"+novoCargo.getNome()+"')");
+			instrucaoSQL.executeUpdate("INSERT INTO cargos (nome) VALUES('"+ novoCargo.getNome() +"')");
 			JOptionPane.showMessageDialog(null, "Cargo adicionado com sucesso!");
 		}catch(SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao adicionar o Cargo");

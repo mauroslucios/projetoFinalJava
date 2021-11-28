@@ -5,6 +5,12 @@ public class Cargo {
 	private Long id;
 	private String nome;
 	
+	public Cargo(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public Cargo() {
 		
 	}

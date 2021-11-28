@@ -32,12 +32,12 @@ public class CargosEditar extends JPanel {
 		criarComponentes();
 		criarEventos();
 	}
-	
+		
 	private void criarComponentes() {
 		setLayout(null);
 		
 		labelTitulo = new JLabel("Edição de cargo",JLabel.CENTER);
-		labelTitulo.setFont (new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+		labelTitulo.setFont (new java.awt.Font("Arial", java.awt.Font.PLAIN, 20));
 		labelCargo = new JLabel("Nome do cargo", JLabel.LEFT);
 		campoCargo = new JTextField(cargoAtual.getNome());
 		botaoGravar = new JButton("Salvar");
@@ -77,23 +77,23 @@ public class CargosEditar extends JPanel {
 		//instrução SQL
 		Statement instrucaoSQL;
 		//resultados
-		//ResultSet resultados;
+		ResultSet resultados;
 		
 		try {
 			//conectando ao banco de dados
 			conexao = DriverManager.getConnection(BancoDeDados.stringDeConexao, BancoDeDados.usuario, BancoDeDados.senha);
 			//criando a instrução SQL
 			instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			instrucaoSQL.executeUpdate("UPDATE cargos set nome='"+campoCargo.getText()+"' WHERE id="+cargoAtual.getId()+"");
+			instrucaoSQL.executeUpdate("UPDATE cargos set nome='"+campoCargo.getText()+"' WHERE id='"+cargoAtual.getId()+"'");
 			
 			JOptionPane.showMessageDialog(null, "Cargo atualizado com sucesso!");
+			
 			conexao.close();
+			
 		}catch(SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao editar o cargo");
 			Logger.getLogger(CargosInserir.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
-			
 	}
 	
 	
