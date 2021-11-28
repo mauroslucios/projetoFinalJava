@@ -77,7 +77,7 @@ public class CargosEditar extends JPanel {
 		//instrução SQL
 		Statement instrucaoSQL;
 		//resultados
-		ResultSet resultados;
+		//ResultSet resultados;
 		
 		try {
 			//conectando ao banco de dados

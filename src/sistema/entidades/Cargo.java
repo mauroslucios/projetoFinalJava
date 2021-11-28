@@ -2,10 +2,10 @@ package sistema.entidades;
 
 public class Cargo {
 
-	private Long id;
+	private int id;
 	private String nome;
 	
-	public Cargo(Long id, String nome) {
+	public Cargo(int id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -15,11 +15,11 @@ public class Cargo {
 		
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -30,6 +30,14 @@ public class Cargo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	@Override
+	public String toString() {
+		return nome ;
+	}
+	
+	
+	
 	
 	
 }

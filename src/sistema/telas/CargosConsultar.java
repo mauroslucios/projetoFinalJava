@@ -32,7 +32,7 @@ public class CargosConsultar extends JPanel {
 	JLabel labelTitulo, labelCargo;
 	JTextField campoCargo;
 	JButton botaoPesquisar,botaoEditar,botaoExcluir;
-	DefaultListModel<Cargo> listasCargosModelo = new DefaultListModel();
+	DefaultListModel<Cargo> listasCargosModelo = new DefaultListModel<Cargo>();
 	JList<Cargo> listaCargos;
 	
 	public CargosConsultar() {
@@ -52,8 +52,8 @@ public class CargosConsultar extends JPanel {
 		botaoEditar.setEnabled(false);
 		botaoExcluir = new JButton("Excluir Cargo");
 		botaoExcluir.setEnabled(false);
-		listasCargosModelo = new DefaultListModel();
-		listaCargos = new JList();
+		listasCargosModelo = new DefaultListModel<Cargo>();
+		listaCargos = new JList<Cargo>();
 		listaCargos.setModel(listasCargosModelo);
 		listaCargos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		
@@ -83,41 +83,7 @@ public class CargosConsultar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				sqlPesquisarCargos(campoCargo.getText());
 			}
-			private void sqlPesquisarCargos(String nome) {
-				//conexão
-				Connection conexao;
-				//Instrução SQL
-				Statement instrucaoSQL;
-				//Resultados
-				ResultSet resultados;
-				
-				try {
-					//conectando ao banco de dados
-					conexao = DriverManager.getConnection(BancoDeDados.stringDeConexao,BancoDeDados.usuario, BancoDeDados.senha);
-					
-					//criando a instução sql
-					instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-					resultados = instrucaoSQL.executeQuery("SELECT * FROM cargos WHERE nome like'%"+nome+"%'");
-					
-					listasCargosModelo.clear();
-					
-					while(resultados.next()) {
-						Cargo cargo = new Cargo();
-						cargo.setId(resultados.getLong("id"));
-						cargo.setNome(resultados.getString("nome"));
-						
-						listasCargosModelo.addElement(cargo);
-					}
-					
-					
-					
-					
-				}catch(SQLException ex) {
-					JOptionPane.showMessageDialog(null, "Ocorreu um erro ao consultar os cargos");
-					Logger.getLogger(CargosInserir.class.getName()).log(Level.SEVERE, null, ex);
-				}
-				
-			}
+			
 		});
 		
 		botaoEditar.addActionListener((ActionListener) new ActionListener() {
@@ -154,9 +120,38 @@ public class CargosConsultar extends JPanel {
 			}
 		});
 		
-				
-		Navegador.cargosEditar(cargoAtual);
+	}
+	
+	private void sqlPesquisarCargos(String nome) {
+		//conexão
+		Connection conexao;
+		//Instrução SQL
+		Statement instrucaoSQL;
+		//Resultados
+		ResultSet resultados;
 		
+		try {
+			//conectando ao banco de dados
+			conexao = DriverManager.getConnection(BancoDeDados.stringDeConexao,BancoDeDados.usuario, BancoDeDados.senha);
+			
+			//criando a instução sql
+			instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			resultados = instrucaoSQL.executeQuery("SELECT * FROM cargos WHERE nome like'%"+nome+"%'");
+			
+			listasCargosModelo.clear();
+								
+			while(resultados.next()) {
+				Cargo cargo = new Cargo();				
+				cargo.setId(resultados.getInt("id"));
+				cargo.setNome(resultados.getString("nome"));
+				
+				listasCargosModelo.addElement(cargo);
+			}
+						
+		}catch(SQLException ex) {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao consultar os cargos");
+			Logger.getLogger(CargosInserir.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		
 	}
 

@@ -51,6 +51,7 @@ public class Navegador {
 	
 	public static void cargosEditar(Cargo cargo) {
 		Sistema.tela = new CargosEditar(cargo);
+		System.out.println(cargo);
 		Sistema.frame.setTitle("Editar Cargos");
 		Navegador.atualizarTela();
 	}
