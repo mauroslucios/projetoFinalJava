@@ -16,39 +16,3 @@ Cadastro de funcionários e cargos usando java swing, spring boot, postgresql(co
 
 ![cadastroFuncionarios](https://user-images.githubusercontent.com/671694/144071197-e45488a6-2234-4d95-952c-84a9b0c282d9.png)
 
-##Postgresql - Docker
-version: '3'
-
-services:
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: "Postgres2021!"
-    ports:
-      - "15432:5432"
-    volumes:
-      - /PostgreSQL:/var/lib/postgresql/data
-    networks:
-      postgres-network:
-       ipv4_address: 172.18.0.2
-  web:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "email-aqui"
-      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2021!"
-    ports:
-      - "16543:80"
-    depends_on:
-      - db
-    networks:
-      postgres-network:
-       ipv4_address: 172.18.0.3
-
-networks:
-  postgres-network:
-    driver: bridge
-    ipam:
-     config:
-       - subnet: 172.18.0.0/16
-         gateway: 172.18.0.1
-
