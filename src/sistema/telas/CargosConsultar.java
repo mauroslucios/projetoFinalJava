@@ -2,6 +2,7 @@ package sistema.telas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ import sistema.BancoDeDados;
 import sistema.Navegador;
 import sistema.entidades.Cargo;
 
-public class CargosConsultar extends JPanel {
+public class CargosConsultar extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -98,11 +99,6 @@ public class CargosConsultar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				sqlDeletarCargo();
 			}
-
-			private void sqlDeletarCargo() {
-				// TODO Auto-generated method stub
-				
-			}
 		});
 		
 		listaCargos.addListSelectionListener(new ListSelectionListener() {
@@ -151,6 +147,34 @@ public class CargosConsultar extends JPanel {
 		}catch(SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao consultar os cargos");
 			Logger.getLogger(CargosInserir.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+	}
+	
+	private void sqlDeletarCargo() {
+		int confirmacao = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir o Cargo? " + cargoAtual.getNome()+"?","Excluir",JOptionPane.YES_NO_OPTION);
+		if(confirmacao == JOptionPane.YES_OPTION) {
+			//conexão
+			Connection conexao;
+			//instrucao SQL
+			Statement instrucaoSQL;
+			//resultados
+			ResultSet resultados;
+			
+			try {
+				//conectando ao banco de dados
+				conexao = DriverManager.getConnection(BancoDeDados.stringDeConexao, BancoDeDados.usuario, BancoDeDados.senha);
+				//criando a instrução SQL
+				instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				instrucaoSQL.executeUpdate("DELETE FROM cargos WHERE id='"+cargoAtual.getId()+"'");
+				
+				JOptionPane.showMessageDialog(null, "Cargo deletado com sucesso.");
+				
+				
+			}catch(SQLException ex) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir o Cargo");
+				Logger.getLogger(CargosInserir.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 		
 	}
