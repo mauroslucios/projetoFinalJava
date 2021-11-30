@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2021!"
+    ports:
+      - "15432:5432"
+    volumes:
+      - /PostgreSQL:/var/lib/postgresql/data
+    networks:
+      postgres-network:
+       ipv4_address: 172.18.0.2
+  web:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "seu email aqui"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2021!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+    networks:
+      postgres-network:
+       ipv4_address: 172.18.0.3
+
+networks:
+  postgres-network:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.18.0.0/16
+         gateway: 172.18.0.1
+mauros@mauroslucios:~/Documentos/docker-projects/postgres
